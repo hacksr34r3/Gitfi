@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gitfi - Professional GitHub Profile Explorer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a2026;
+            --secondary: #4a5568;
+            --accent: #3182ce;
+            --light: #f7fafc;
+            --dark: #1a2026;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #ecc94b;
+            --bg-light: #ffffff;
+            --bg-dark: #2d3748;
+            --text-light: #2d3748;
+            --text-dark: #e2e8f0;
+        }
+
+        [data-theme="dark"] {
+            --bg: var(--bg-dark);
+            --text: var(--text-dark);
+            --card-bg: var(--primary);
+        }
+
+        [data-theme="light"] {
+            --bg: var(--bg-light);
+            --text: var(--text-light);
+            --card-bg: var(--light);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        h1:hover {
+            opacity: 0.8;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--secondary);
+            border-radius: 24px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: var(--card-bg);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+        }
+
+        .search-button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 0 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-button:hover {
+            background-color: #2b6cb0;
+            transform: translateY(-2px);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--bg);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .user-info h2 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.8rem;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background-color: var(--bg-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .bio {
+            background-color: var(--bg-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .repos-container {
+            margin-top: 20px;
+        }
+
+        .repos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .repo {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .repo:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .repo-details {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .pagination-button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pagination-button:disabled {
+            background-color: var(--secondary);
+            cursor: not-allowed;
+        }
+
+        .recent-searches {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+        }
+
+        .recent-search-item {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .ad-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+        }
+
+        .user-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .user-item {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .user-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .user-item-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--bg);
+        }
+
+        .user-item-info {
+            flex: 1;
+        }
+
+        .user-item-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .user-item-login {
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+
+        .results-title {
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                flex-direction: column;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .repos {
+                grid-template-columns: 1fr;
+            }
+
+            .user-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+    <div class="container">
+        <header>
+            <h1 onclick="goToHome()">Gitfi</h1>
+            <p>Professional GitHub Profile Explorer</p>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key': 'd31078add534fbc9efe5837832ddbe30',
+                    'format': 'iframe',
+                    'height': 90,
+                    'width': 728,
+                    'params': {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/d31078add534fbc9efe5837832ddbe30/invoke.js"></script>
+        </div>
+
+        <form class="inputForm" id="userInput">
+            <div class="search-container">
+                <input type="text" id="inputBox" autocomplete="off" placeholder="Enter GitHub username" class="search-input" />
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </form>
+
+        <div class="recent-searches" id="recentSearches" style="display: none;">
+            <h3>Recent Searches</h3>
+            <div id="recentSearchList"></div>
+        </div>
+
+        <main id="main"></main>
+    </div>
+
+    <script>
+        let api = "https://api.github.com/search/users?q=";
+        let userApi = "https://api.github.com/users/";
+        let currentPage = 1;
+        const perPage = 8;
+        let currentUsername = '';
+
+        // Load Axios
+        let fetchScript = document.createElement("script");
+        fetchScript.src = "https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js";
+        document.head.appendChild(fetchScript);
+
+        let main = document.getElementById("main");
+        let inputForm = document.getElementById("userInput");
+        let inputBox = document.getElementById("inputBox");
+        let themeToggle = document.getElementById("themeToggle");
+        let recentSearches = document.getElementById("recentSearches");
+        let recentSearchList = document.getElementById("recentSearchList");
+
+        // Go to home screen
+        const goToHome = () => {
+            inputBox.value = '';
+            searchUsers('a');
+        };
+
+        // Theme handling
+        const toggleTheme = () => {
+            const body = document.body;
+            const currentTheme = body.dataset.theme;
+            body.dataset.theme = currentTheme === 'light' ? 'dark' : 'light';
+            themeToggle.innerHTML = `<i class="fas fa-${currentTheme === 'light' ? 'sun' : 'moon'}"></i>`;
+            localStorage.setItem('theme', body.dataset.theme);
+        };
+
+        // Recent searches
+        const saveSearch = (username) => {
+            let searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+            if (!searches.includes(username)) {
+                searches.unshift(username);
+                searches = searches.slice(0, 5);
+                localStorage.setItem('recentSearches', JSON.stringify(searches));
+                displayRecentSearches();
+            }
+        };
+
+        const displayRecentSearches = () => {
+            let searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+            if (searches.length > 0) {
+                recentSearches.style.display = 'block';
+                recentSearchList.innerHTML = searches.map(search => `
+                    <span class="recent-search-item" onclick="getUserDetails('${search}')">${search}</span>
+                `).join('');
+            }
+        };
+
+        const searchUsers = async (keyword) => {
+            showLoading();
+            try {
+                const response = await axios.get(`${api}${keyword}`);
+                displayUserList(response.data.items);
+            } catch (error) {
+                handleError(error, "Error searching users");
+            }
+        };
+
+        const displayUserList = (users) => {
+            if (!users || users.length === 0) {
+                errorFunction("No users found");
+                return;
+            }
+
+            main.innerHTML = `
+                <h3 class="results-title">Search Results (${users.length} users found)</h3>
+                <div class="user-list" id="userList"></div>
+            `;
+
+            let userList = document.getElementById("userList");
+            users.forEach(user => {
+                let userItem = document.createElement("div");
+                userItem.className = "user-item";
+                userItem.innerHTML = `
+                    <img src="${user.avatar_url}" alt="${user.login}" class="user-item-avatar">
+                    <div class="user-item-info">
+                        <div class="user-item-name">${user.login}</div>
+                        ${user.type ? `<div class="user-item-login">${user.type}</div>` : ''}
+                    </div>
+                `;
+                userItem.addEventListener("click", () => {
+                    saveSearch(user.login);
+                    getUserDetails(user.login);
+                });
+                userList.appendChild(userItem);
+            });
+        };
+
+        const getUserDetails = async (username) => {
+            showLoading();
+            currentUsername = username;
+            try {
+                const response = await axios.get(`${userApi}${username}`);
+                userCard(response.data);
+                getRepos(username, 1);
+            } catch (error) {
+                handleError(error, error.response?.status === 404 ? "User not found" : "Error fetching user data");
+            }
+        };
+
+        const getRepos = async (username, page) => {
+            try {
+                const response = await axios.get(`${userApi}${username}/repos?sort=created&per_page=${perPage}&page=${page}`);
+                repoCardFunction(response.data, page);
+            } catch (error) {
+                console.error("Problem fetching repos", error);
+            }
+        };
+
+        const userCard = (user) => {
+            let id = user.name || user.login;
+            let bio = user.bio ? `<div class="bio"><p>${user.bio}</p></div>` : "";
+            let location = user.location ? `<p><i class="fas fa-map-marker-alt"></i> ${user.location}</p>` : "";
+            let twitter = user.twitter_username ? `<p><i class="fab fa-twitter"></i> @${user.twitter_username}</p>` : "";
+            let blog = user.blog ? `<p><i class="fas fa-link"></i> <a href="${user.blog.startsWith('http') ? user.blog : 'https://' + user.blog}" target="_blank">${user.blog}</a></p>` : "";
+
+            main.innerHTML = `
+                <div class="card">
+                    <div class="profile-header">
+                        <img src="${user.avatar_url}" alt="${user.name}" class="avatar">
+                        <div class="user-info">
+                            <h2>${id}</h2>
+                            <p>@${user.login}</p>
+                            ${location}
+                            ${twitter}
+                            ${blog}
+                            <div class="user-stats">
+                                <div class="stat"><i class="fas fa-users"></i> ${user.followers} followers</div>
+                                <div class="stat"><i class="fas fa-user-friends"></i> ${user.following} following</div>
+                                <div class="stat"><i class="fas fa-code-branch"></i> ${user.public_repos} repos</div>
+                            </div>
+                        </div>
+                    </div>
+                    ${bio}
+                    <div class="repos-container">
+                        <h3 class="repos-title">Latest Repositories</h3>
+                        <div class="repos" id="repos"></div>
+                        <div class="pagination" id="pagination"></div>
+                    </div>
+                </div>
+            `;
+        };
+
+        const repoCardFunction = (repos, page) => {
+            let reposElement = document.getElementById("repos");
+            let paginationElement = document.getElementById("pagination");
+            reposElement.innerHTML = '';
+
+            if (repos.length === 0) {
+                reposElement.innerHTML = '<p>No repositories found</p>';
+                return;
+            }
+
+            repos.forEach(repo => {
+                let repoEl = document.createElement("a");
+                repoEl.classList.add("repo");
+                repoEl.href = repo.html_url;
+                repoEl.target = "_blank";
+                repoEl.innerHTML = `
+                    <div><i class="fas fa-book"></i> ${repo.name}</div>
+                    <div class="repo-details">
+                        ${repo.description ? `<div>${repo.description}</div>` : ''}
+                        <div>
+                            ${repo.language ? `<span><i class="fas fa-code"></i> ${repo.language}</span>` : ''}
+                            ${repo.stargazers_count > 0 ? `<span><i class="fas fa-star"></i> ${repo.stargazers_count}</span>` : ''}
+                            ${repo.fork ? `<span><i class="fas fa-code-branch"></i> Fork</span>` : ''}
+                        </div>
+                    </div>
+                `;
+                reposElement.appendChild(repoEl);
+            });
+
+            paginationElement.innerHTML = `
+                <button class="pagination-button" ${page === 1 ? 'disabled' : ''} onclick="getRepos('${currentUsername}', ${page - 1})">Previous</button>
+                <button class="pagination-button" ${repos.length < perPage ? 'disabled' : ''} onclick="getRepos('${currentUsername}', ${page + 1})">Next</button>
+            `;
+        };
+
+        const handleError = (error, message) => {
+            if (error.response?.status === 403) {
+                errorFunction("Rate limit exceeded. Please try again later.");
+            } else {
+                errorFunction(message);
+            }
+            console.error("Error:", error);
+        };
+
+        const errorFunction = (error) => {
+            main.innerHTML = `
+                <div class="card error-card">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h2>${error}</h2>
+                    <p>Please try another search term</p>
+                </div>
+            `;
+        };
+
+        const showLoading = () => {
+            main.innerHTML = `
+                <div class="card" style="text-align: center;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
+                    <p>Loading data...</p>
+                </div>
+            `;
+        };
+
+        inputForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let keyword = inputBox.value.trim();
+            if (keyword) {
+                saveSearch(keyword);
+                searchUsers(keyword);
+            }
+        });
+
+        themeToggle.addEventListener("click", toggleTheme);
+
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.dataset.theme = savedTheme;
+            themeToggle.innerHTML = `<i class="fas fa-${savedTheme === 'light' ? 'moon' : 'sun'}"></i>`;
+            displayRecentSearches();
+            searchUsers('a');
+        });
+    </script>
+</body>
+
+</html>
