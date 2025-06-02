@@ -11,28 +11,32 @@
         :root {
             --primary: #1a2026;
             --secondary: #4a5568;
-            --accent: #3182ce;
+            --accent: #2563eb;
             --light: #f7fafc;
-            --dark: #1a2026;
-            --success: #38a169;
-            --danger: #e53e3e;
-            --warning: #ecc94b;
+            --dark: #111827;
+            --success: #10b981;
+            --danger: #ef4444;
+           Eliot
+            --warning: #f59e0b;
             --bg-light: #ffffff;
-            --bg-dark: #2d3748;
-            --text-light: #2d3748;
-            --text-dark: #e2e8f0;
+            --bg-dark: #1f2937;
+            --text-light: #1f2937;
+            --text-dark: #e5e7eb;
+            --border: #e5e7eb;
         }
 
         [data-theme="dark"] {
             --bg: var(--bg-dark);
             --text: var(--text-dark);
-            --card-bg: var(--primary);
+            --card-bg: var(--dark);
+            --border-color: #374151;
         }
 
         [data-theme="light"] {
             --bg: var(--bg-light);
             --text: var(--text-light);
             --card-bg: var(--light);
+            --border-color: var(--border);
         }
 
         * {
@@ -52,80 +56,95 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 24px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
         }
 
         h1 {
-            color: var(--primary);
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            font-weight: 700;
             background: linear-gradient(135deg, var(--accent), var(--success));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             cursor: pointer;
             display: inline-block;
+            transition: opacity 0.2s ease;
         }
 
         h1:hover {
-            opacity: 0.8;
+            opacity: 0.85;
         }
 
-        .theme-toggle {
+        .header-buttons {
             position: absolute;
             right: 0;
             top: 0;
+            display: flex;
+            gap: 12px;
+        }
+
+        .theme-toggle,
+        .settings-button {
             background: var(--accent);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover,
+        .settings-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
         }
 
         .search-container {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            gap: 12px;
+            max-width: 900px;
+            margin: 0 auto 24px;
         }
 
         .search-input {
             flex: 1;
-            padding: 12px 20px;
-            border: 2pxellen solid var(--secondary);
-            border-radius: 24px;
+            padding: 14px 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
             font-size: 1rem;
             outline: none;
-            transition: all 0.3s ease;
             background-color: var(--card-bg);
+            transition: all 0.3s ease;
         }
 
         .search-input:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.2);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
         .search-button {
             background-color: var(--accent);
             color: white;
             border: none;
-            border-radius: 24px;
-            padding: 0 25px;
+            border-radius: 12px;
+            padding: 12px 28px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: 600;
@@ -136,31 +155,31 @@
         }
 
         .search-button:hover {
-            background-color: #2b6cb0;
+            background-color: #1d4ed8;
             transform: translateY(-2px);
         }
 
         .card {
             background-color: var(--card-bg);
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 20px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            padding: 32px;
+            margin-bottom: 24px;
             transition: all 0.3s ease;
         }
 
         .profile-header {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 24px;
             flex-wrap: wrap;
         }
 
         .avatar {
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            border: 2px solid var(--bg);
+            border: 3px solid var(--bg);
             transition: transform 0.3s ease;
         }
 
@@ -169,140 +188,167 @@
         }
 
         .user-info h2 {
+            font-size: 2rem;
+            font-weight: 600;
             color: var(--primary);
-            margin-bottom: 5px;
-            font-size: 1.8rem;
+            margin-bottom: 8px;
         }
 
         .user-stats {
             display: flex;
-            gap: 15px;
-            margin-top: 10px;
+            gap: 16px;
+            margin-top: 12px;
             flex-wrap: wrap;
         }
 
         .stat {
             background-color: var(--bg-light);
-            padding: 8px 15px;
+            padding: 10px 20px;
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
 
         .bio {
             background-color: var(--bg-light);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 10px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 16px;
+            font-size: 1rem;
         }
 
         .repos-container {
-            margin-top: 20px;
+            margin-top: 24px;
         }
 
         .repos {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
         }
 
         .repo {
             background-color: var(--primary);
             color: white;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 12px;
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
         .repo:hover {
             background-color: var(--accent);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         .repo-details {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            margin-top: 5px;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 8px;
         }
 
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 24px;
         }
 
         .pagination-button {
             background-color: var(--accent);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-button:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
         }
 
         .pagination-button:disabled {
             background-color: var(--secondary);
             cursor: not-allowed;
+            transform: none;
         }
 
         .recent-searches {
-            margin: 20px 0;
-            padding: 15px;
+            margin: 24px 0;
+            padding: 20px;
             background-color: var(--card-bg);
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         .recent-search-item {
-            display: inline-block;
-            padding: 5px 10px;
-            margin: 5px;
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            margin: 6px;
             background-color: var(--accent);
             color: white;
-            border-radius: 15px;
+            border-radius: 20px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .recent-search-item:hover {
+            background-color: #1d4ed8;
+        }
+
+        .recent-search-item .delete-search {
+            margin-left: 8px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+
+        .recent-search-item .delete-search:hover {
+            opacity: 1;
         }
 
         .ad-container {
             text-align: center;
-            margin: 20px 0;
-            padding: 20px;
+            margin: 24px 0;
+            padding: 24px;
             background-color: var(--card-bg);
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         .user-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
         }
 
         .user-item {
             background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
+            gap: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
             cursor: pointer;
         }
 
         .user-item:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
         }
 
         .user-item-avatar {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            border: 2px solid var(--bg);
+            border: 3px solid var(--bg);
         }
 
         .user-item-info {
@@ -311,22 +357,115 @@
 
         .user-item-name {
             font-weight: 600;
+            font-size: 1.1rem;
             color: var(--primary);
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .user-item-login {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--secondary);
         }
 
         .results-title {
-            font-size: 1.2rem;
-            margin: 20px 0 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 24px 0 16px;
             color: var(--primary);
         }
 
+        .settings-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            z-index: 1000;
+        }
+
+        .settings-popup.show {
+            display: block;
+        }
+
+        .settings-popup h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .settings-popup .close-popup {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--secondary);
+            cursor: pointer;
+        }
+
+        .settings-popup .close-popup:hover {
+            color: var(--danger);
+        }
+
+        .settings-option {
+            margin-bottom: 20px;
+        }
+
+        .settings-option label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .settings-option select,
+        .settings-option input[type="checkbox"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: var(--bg-light);
+        }
+
+        .settings-option input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
         @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
             .search-container {
                 flex-direction: column;
             }
@@ -343,6 +482,10 @@
             .user-list {
                 grid-template-columns: 1fr;
             }
+
+            .settings-popup {
+                width: 95%;
+            }
         }
     </style>
 </head>
@@ -352,9 +495,14 @@
         <header>
             <h1 onclick="goToHome()">Gitfi</h1>
             <p>Professional GitHub Profile Explorer</p>
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon"></i>
-            </button>
+            <div class="header-buttons">
+                <button class="settings-button" id="settingsButton">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </header>
 
         <div class="ad-container">
@@ -372,7 +520,7 @@
 
         <form class="inputForm" id="userInput">
             <div class="search-container">
-                <input type="text" id="inputBox" autocomplete="off" placeholder="Enter GitHub username" class="search-input" />
+                <input type="text" id="inputBox" autocomplete="off" placeholder="Enter GitHub username or keyword" class="search-input" />
                 <button type="submit" class="search-button">
                     <i class="fas fa-search"></i> Search
                 </button>
@@ -385,14 +533,57 @@
         </div>
 
         <main id="main"></main>
+
+        <div class="overlay" id="overlay"></div>
+        <div class="settings-popup" id="settingsPopup">
+            <button class="close-popup" id="closePopup"><i class="fas fa-times"></i></button>
+            <h2>Developer Options</h2>
+            <div class="settings-option">
+                <label for="sortOrder">Sort Results By</label>
+                <select id="sortOrder">
+                    <option value="best-match">Best Match</option>
+                    <option value="followers">Followers</option>
+                    <option value="repositories">Repositories</option>
+                    <option value="joined">Join Date</option>
+                </select>
+            </div>
+            <div class="settings-option">
+                <label for="userType">User Type</label>
+                <select id="userType">
+                    <option value="all">All</option>
+                    <option value="user">Users</option>
+                    <option value="organization">Organizations</option>
+                </select>
+            </div>
+            <div class="settings-option">
+                <label>
+                    <input type="checkbox" id="showPrivateRepos" />
+                    Include Private Repositories
+                </label>
+            </div>
+            <div class="settings-option">
+                <label>
+                    <input type="checkbox" id="cacheResults" checked />
+                    Cache Search Results
+                </label>
+            </div>
+        </div>
     </div>
 
     <script>
         let api = "https://api.github.com/search/users?q=";
         let userApi = "https://api.github.com/users/";
         let currentPage = 1;
-        const perPage = 8;
+        const perPage = 30;
         let currentUsername = '';
+        let currentKeyword = '';
+        let settings = {
+            sortOrder: 'best-match',
+            userType: 'all',
+            showPrivateRepos: false,
+            cacheResults: true
+        };
+        let searchCache = new Map();
 
         // Load Axios
         let fetchScript = document.createElement("script");
@@ -403,12 +594,21 @@
         let inputForm = document.getElementById("userInput");
         let inputBox = document.getElementById("inputBox");
         let themeToggle = document.getElementById("themeToggle");
+        let settingsButton = document.getElementById("settingsButton");
+        let settingsPopup = document.getElementById("settingsPopup");
+        let closePopup = document.getElementById("closePopup");
+        let overlay = document.getElementById("overlay");
         let recentSearches = document.getElementById("recentSearches");
         let recentSearchList = document.getElementById("recentSearchList");
+        let sortOrder = document.getElementById("sortOrder");
+        let userType = document.getElementById("userType");
+        let showPrivateRepos = document.getElementById("showPrivateRepos");
+        let cacheResults = document.getElementById("cacheResults");
 
         // Go to home screen
         const goToHome = () => {
             inputBox.value = '';
+            currentPage = 1;
             searchUsers('a');
         };
 
@@ -419,6 +619,12 @@
             body.dataset.theme = currentTheme === 'light' ? 'dark' : 'light';
             themeToggle.innerHTML = `<i class="fas fa-${currentTheme === 'light' ? 'sun' : 'moon'}"></i>`;
             localStorage.setItem('theme', body.dataset.theme);
+        };
+
+        // Settings popup
+        const toggleSettingsPopup = () => {
+            settingsPopup.classList.toggle('show');
+            overlay.classList.toggle('show');
         };
 
         // Recent searches
@@ -432,35 +638,67 @@
             }
         };
 
+        const deleteSearch = (username) => {
+            let searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+            searches = searches.filter(search => search !== username);
+            localStorage.setItem('recentSearches', JSON.stringify(searches));
+            displayRecentSearches();
+        };
+
         const displayRecentSearches = () => {
             let searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
             if (searches.length > 0) {
                 recentSearches.style.display = 'block';
                 recentSearchList.innerHTML = searches.map(search => `
-                    <span class="recent-search-item" onclick="getUserDetails('${search}')">${search}</span>
+                    <span class="recent-search-item">
+                        <span onclick="getUserDetails('${search}')">${search}</span>
+                        <span class="delete-search" onclick="deleteSearch('${search}')"><i class="fas fa-times"></i></span>
+                    </span>
                 `).join('');
+            } else {
+                recentSearches.style.display = 'none';
             }
         };
 
-        const searchUsers = async (keyword) => {
+        const searchUsers = async (keyword, page = 1) => {
             showLoading();
+            currentKeyword = keyword;
+            currentPage = page;
+            const cacheKey = `${keyword}_${page}_${settings.sortOrder}_${settings.userType}`;
+            
+            if (settings.cacheResults && searchCache.has(cacheKey)) {
+                displayUserList(searchCache.get(cacheKey));
+                return;
+            }
+
             try {
-                const response = await axios.get(`${api}${keyword}`);
-                displayUserList(response.data.items);
+                let query = `${api}${encodeURIComponent(keyword)}&page=${page}&per_page=${perPage}`;
+                if (settings.sortOrder !== 'best-match') {
+                    query += `&sort=${settings.sortOrder}`;
+                }
+                if (settings.userType !== 'all') {
+                    query += `+type:${settings.userType}`;
+                }
+                const response = await axios.get(query);
+                if (settings.cacheResults) {
+                    searchCache.set(cacheKey, response.data.items);
+                }
+                displayUserList(response.data.items, response.data.total_count);
             } catch (error) {
                 handleError(error, "Error searching users");
             }
         };
 
-        const displayUserList = (users) => {
+        const displayUserList = (users, totalCount) => {
             if (!users || users.length === 0) {
                 errorFunction("No users found");
                 return;
             }
 
             main.innerHTML = `
-                <h3 class="results-title">Search Results (${users.length} users found)</h3>
+                <h3 class="results-title">Search Results (${totalCount} users found)</h3>
                 <div class="user-list" id="userList"></div>
+                <div class="pagination" id="pagination"></div>
             `;
 
             let userList = document.getElementById("userList");
@@ -480,6 +718,14 @@
                 });
                 userList.appendChild(userItem);
             });
+
+            const totalPages = Math.ceil(totalCount / perPage);
+            let paginationElement = document.getElementById("pagination");
+            paginationElement.innerHTML = `
+                <button class="pagination-button" ${currentPage === 1 ? 'disabled' : ''} onclick="searchUsers('${currentKeyword}', ${currentPage - 1})">Previous</button>
+                <span>Page ${currentPage} of ${totalPages}</span>
+                <button class="pagination-button" ${currentPage >= totalPages ? 'disabled' : ''} onclick="searchUsers('${currentKeyword}', ${currentPage + 1})">Next</button>
+            `;
         };
 
         const getUserDetails = async (username) => {
@@ -496,7 +742,11 @@
 
         const getRepos = async (username, page) => {
             try {
-                const response = await axios.get(`${userApi}${username}/repos?sort=created&per_page=${perPage}&page=${page}`);
+                let url = `${userApi}${username}/repos?sort=created&per_page=${perPage}&page=${page}`;
+                if (settings.showPrivateRepos) {
+                    url += `&type=all`;
+                }
+                const response = await axios.get(url);
                 repoCardFunction(response.data, page);
             } catch (error) {
                 console.error("Problem fetching repos", error);
@@ -507,8 +757,10 @@
             let id = user.name || user.login;
             let bio = user.bio ? `<div class="bio"><p>${user.bio}</p></div>` : "";
             let location = user.location ? `<p><i class="fas fa-map-marker-alt"></i> ${user.location}</p>` : "";
-            let twitter = user.twitter_username ? `<p><i class="fab fa-twitter"></i> @${user.twitter_username}</p>` : "";
+            let twitter = user.twitter_username ? `<p><i class="fab fa-twitter"></i> <a href="https://twitter.com/${user.twitter_username}" target="_blank">@${user.twitter_username}</a></p>` : "";
             let blog = user.blog ? `<p><i class="fas fa-link"></i> <a href="${user.blog.startsWith('http') ? user.blog : 'https://' + user.blog}" target="_blank">${user.blog}</a></p>` : "";
+            let company = user.company ? `<p><i class="fas fa-building"></i> ${user.company}</p>` : "";
+            let hireable = user.hireable ? `<p><i class="fas fa-briefcase"></i> Available for hire</p>` : "";
 
             main.innerHTML = `
                 <div class="card">
@@ -518,8 +770,10 @@
                             <h2>${id}</h2>
                             <p>@${user.login}</p>
                             ${location}
+                            ${company}
                             ${twitter}
                             ${blog}
+                            ${hireable}
                             <div class="user-stats">
                                 <div class="stat"><i class="fas fa-users"></i> ${user.followers} followers</div>
                                 <div class="stat"><i class="fas fa-user-friends"></i> ${user.following} following</div>
@@ -559,7 +813,8 @@
                         <div>
                             ${repo.language ? `<span><i class="fas fa-code"></i> ${repo.language}</span>` : ''}
                             ${repo.stargazers_count > 0 ? `<span><i class="fas fa-star"></i> ${repo.stargazers_count}</span>` : ''}
-                            ${repo.fork ? `<span><i class="fas fa-code-branch"></i> Fork</span>` : ''}
+                            ${repo.forks_count > 0 ? `<span><i class="fas fa-code-branch"></i> ${repo.forks_count} forks</span>` : ''}
+                            ${repo.open_issues_count > 0 ? `<span><i class="fas fa-exclamation-circle"></i> ${repo.open_issues_count} issues</span>` : ''}
                         </div>
                     </div>
                 `;
@@ -568,6 +823,7 @@
 
             paginationElement.innerHTML = `
                 <button class="pagination-button" ${page === 1 ? 'disabled' : ''} onclick="getRepos('${currentUsername}', ${page - 1})">Previous</button>
+                <span>Page ${page}</span>
                 <button class="pagination-button" ${repos.length < perPage ? 'disabled' : ''} onclick="getRepos('${currentUsername}', ${page + 1})">Next</button>
             `;
         };
@@ -605,11 +861,43 @@
             let keyword = inputBox.value.trim();
             if (keyword) {
                 saveSearch(keyword);
-                searchUsers(keyword);
+                currentPage = 1;
+                searchUsers(keyword, currentPage);
             }
         });
 
         themeToggle.addEventListener("click", toggleTheme);
+        settingsButton.addEventListener("click", toggleSettingsPopup);
+        closePopup.addEventListener("click", toggleSettingsPopup);
+        overlay.addEventListener("click", toggleSettingsPopup);
+
+        sortOrder.addEventListener("change", (e) => {
+            settings.sortOrder = e.target.value;
+            if (currentKeyword) {
+                searchUsers(currentKeyword, currentPage);
+            }
+        });
+
+        userType.addEventListener("change", (e) => {
+            settings.userType = e.target.value;
+            if (currentKeyword) {
+                searchUsers(currentKeyword, currentPage);
+            }
+        });
+
+        showPrivateRepos.addEventListener("change", (e) => {
+            settings.showPrivateRepos = e.target.checked;
+            if (currentUsername) {
+                getRepos(currentUsername, 1);
+            }
+        });
+
+        cacheResults.addEventListener("change", (e) => {
+            settings.cacheResults = e.target.checked;
+            if (!settings.cacheResults) {
+                searchCache.clear();
+            }
+        });
 
         window.addEventListener('load', () => {
             const savedTheme = localStorage.getItem('theme') || 'light';
